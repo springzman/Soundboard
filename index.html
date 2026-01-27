@@ -2,22 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My instants ip banned me :(</title>
+  <title>Epic Soundboard</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e1e2f, #3e3e5e);
+      color: #fff;
+      flex-direction: column;
+    }
+
+    h1 {
+      margin-bottom: 40px;
+      font-size: 3em;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      background: linear-gradient(145deg, #ff5e62, #ff9966);
+      border: none;
+      padding: 20px 40px;
+      border-radius: 15px;
+      font-size: 1.2em;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.5);
+    }
+
+    button:active {
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+    }
+  </style>
 </head>
 <body>
-  <h1>Soundboard</h1>
+  <h1>Epic Soundboard</h1>
+  <div class="buttons">
+    <button onclick="playSound('sound1')">Play 0127</button>
+    <button onclick="playSound('sound2')">Play Biden</button>
+    <button onclick="playSound('sound3')">Play Consent</button>
+  </div>
 
-  <button onclick="playSound('mySound')">Play 0127</button>
-  <button onclick="playSound('otherSound')">Play Other Sound</button>
-
-  <!-- Audio elements -->
-  <audio id="mySound" src="https://raw.githubusercontent.com/springzman/Soundboard/main/0127.MP3"></audio>
-  <audio id="otherSound" src="https://raw.githubusercontent.com/springzman/Soundboard/main/consent.mp3"></audio>
+  <!-- Audio Elements -->
+  <audio id="sound1" src="https://raw.githubusercontent.com/springzman/Soundboard/main/0127.MP3"></audio>
+  <audio id="sound2" src="https://raw.githubusercontent.com/springzman/Soundboard/main/biden.MP3"></audio>
+  <audio id="sound3" src="https://raw.githubusercontent.com/springzman/Soundboard/main/consent.mp3"></audio>
 
   <script>
     function playSound(id) {
       const audio = document.getElementById(id);
-      audio.currentTime = 0; // restart if already playing
+      audio.currentTime = 0;
       audio.play();
     }
   </script>
