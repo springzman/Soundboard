@@ -1,82 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My soundboard</title>
-  <style>
-    /* Basic reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+<meta charset="UTF-8">
+<title>Epic Soundboard</title>
 
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #1e1e2f, #3e3e5e);
-      color: #fff;
-      flex-direction: column;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, Segoe UI, sans-serif;
+}
 
-    h1 {
-      margin-bottom: 40px;
-      font-size: 3em;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-    }
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #2a2a40, #0f0f1a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
 
-    .buttons {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+h1 {
+  margin-top: 40px;
+  font-size: 3rem;
+  letter-spacing: 1px;
+}
 
-    button {
-      background: linear-gradient(145deg, #ff5e62, #ff9966);
-      border: none;
-      padding: 20px 40px;
-      border-radius: 15px;
-      font-size: 1.2em;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-    }
+/* Search */
+.search {
+  margin: 30px 0;
+}
 
-    button:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 12px 20px rgba(0,0,0,0.5);
-    }
+.search input {
+  width: 300px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: #1c1c2b;
+  color: white;
+}
 
-    button:active {
-      transform: translateY(0) scale(0.98);
-      box-shadow: 0 6px 10px rgba(0,0,0,0.3);
-    }
-  </style>
+/* Volume */
+.volume {
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.volume input {
+  width: 200px;
+}
+
+/* Buttons */
+.buttons {
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 30px;
+}
+
+button {
+  background: linear-gradient(145deg, #ff5e62, #ff9966);
+  border: none;
+  padding: 18px;
+  border-radius: 14px;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,.35);
+  transition: .25s ease;
+}
+
+button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0,0,0,.6);
+}
+
+button:active {
+  transform: scale(.96);
+}
+</style>
 </head>
+
 <body>
-  <h1>Epic Soundboard</h1>
-  <div class="buttons">
-    <button onclick="playSound('sound1')">Play consent</button>
-    <button onclick="playSound('sound2')">Play Biden</button>
-    <button onclick="playSound('sound3')">Play snickers</button>
-  </div>
 
-  <!-- Audio Elements -->
-  <audio id="sound1" src="https://raw.githubusercontent.com/springzman/Soundboard/main/0127.MP3"></audio>
-  <audio id="sound2" src="https://raw.githubusercontent.com/springzman/Soundboard/main/biden.MP3"></audio>
-  <audio id="sound3" src="https://raw.githubusercontent.com/springzman/Soundboard/main/Download (3).mp3"></audio>
+<h1>Epic Soundboard</h1>
 
-  <script>
-    function playSound(id) {
-      const audio = document.getElementById(id);
-      audio.currentTime = 0;
-      audio.play();
-    }
-  </script>
+<div class="search">
+  <input type="text" id="search" placeholder="Search sounds..." onkeyup="filterSounds()">
+</div>
+
+<div class="volume">
+  🔊 Volume
+  <input type="range" min="0" max="2" step="0.01" value="1" id="volume">
+</div>
+
+<div class="buttons" id="buttons">
+  <!-- EASY TO ADD MORE -->
+  <button data-name="consent" onclick="playSound('sound1')">Consent</button>
+  <button data-name="biden" onclick="playSound('sound2')">Biden</button>
+  <button data-name="snickers" onclick="playSound('sound3')">Snickers</button>
+
+  <button data-name="bruh" onclick="playSound('sound4')">filler button</button>
+  <button data-name="vine boom" onclick="playSound('sound5')">filler button</button>
+  <button data-name="laugh" onclick="playSound('sound6')">Laugh</button>
+</div>
+
+<!-- AUDIO -->
+<audio id="sound1" src="https://raw.githubusercontent.com/springzman/Soundboard/main/0127.MP3"></audio>
+<audio id="sound2" src="https://raw.githubusercontent.com/springzman/Soundboard/main/biden.MP3"></audio>
+<audio id="sound3" src="https://raw.githubusercontent.com/springzman/Soundboard/main/Download (3).mp3"></audio>
+
+<!-- filler examples -->
+<audio id="sound4" src="https://www.myinstants.com/media/sounds/bruh.mp3"></audio>
+<audio id="sound5" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
+<audio id="sound6" src="https://www.myinstants.com/media/sounds/cartoon-laugh.mp3"></audio>
+
+<script>
+let currentAudio = null;
+
+const volumeSlider = document.getElementById("volume");
+
+function playSound(id) {
+  // stop currently playing audio
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  const audio = document.getElementById(id);
+  audio.volume = volumeSlider.value;
+  audio.currentTime = 0;
+  audio.play();
+
+  currentAudio = audio;
+}
+
+// live volume update
+volumeSlider.addEventListener("input", () => {
+  if (currentAudio) {
+    currentAudio.volume = volumeSlider.value;
+  }
+});
+
+// search filter
+function filterSounds() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const buttons = document.querySelectorAll(".buttons button");
+
+  buttons.forEach(btn => {
+    const name = btn.dataset.name;
+    btn.style.display = name.includes(query) ? "block" : "none";
+  });
+}
+</script>
+
 </body>
 </html>
